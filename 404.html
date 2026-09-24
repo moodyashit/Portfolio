@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>404 — Lost in the sky | Coleen N. Aclaro</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#05070a; --star:#fef6de; --gold:#e8cf8a; --lilac:#8fb4e8; --mute:#7c8aa3;
+    --sky-bg:radial-gradient(ellipse at 20% 10%, #14243a 0%, transparent 50%), radial-gradient(ellipse at 80% 70%, #101c2e 0%, transparent 55%), #05070a;
+  }
+  *{box-sizing:border-box;}
+  html,body{height:100%; margin:0;}
+  body{
+    background:var(--sky-bg); color:var(--star); font-family:'Jost',sans-serif; font-weight:300;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
+    padding:24px; overflow:hidden; position:relative;
+  }
+  h1{font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(2.6rem,9vw,4.2rem); margin:18px 0 6px; color:#fff;}
+  p{color:var(--mute); font-size:.95rem; max-width:380px; line-height:1.7; margin:0 0 26px;}
+  a.home{font-size:.82rem; letter-spacing:.05em; color:var(--void); background:var(--gold); border:1px solid var(--gold);
+    padding:11px 24px; border-radius:2px; text-decoration:none; transition:transform .3s ease, box-shadow .3s ease;}
+  a.home:hover{transform:translateY(-3px); box-shadow:0 10px 24px -10px rgba(232,207,138,.5);}
+  .fairy{width:78px; height:78px; animation:drift 4s ease-in-out infinite;}
+  @keyframes drift{0%,100%{transform:translateY(0) rotate(-4deg);} 50%{transform:translateY(-14px) rotate(4deg);}}
+  .star{position:absolute; border-radius:50%; background:var(--star); opacity:.6;}
+  @media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important;} }
+</style>
+</head>
+<body>
+  <svg class="fairy" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+    <path d="M18 20l6 10-6 10 10-6 10 6-6-10 6-10-10 6z" fill="var(--gold)" opacity=".75"/>
+    <circle cx="46" cy="30" r="3.4" fill="var(--star)"/>
+    <path d="M46 33c-1.6 5-1.6 11 0 17 1.6-6 1.6-12 0-17z" fill="var(--star)"/>
+  </svg>
+  <h1>404</h1>
+  <p>She flew off looking for this page and got a little lost. This part of the sky doesn't exist &mdash; but the rest of it does.</p>
+  <a class="home" href="./index.html">Back to the sky ↓</a>
+
+  <script>
+    // a few faint scattered stars, respecting reduced motion via CSS above
+    for(let i=0;i<28;i++){
+      const s=document.createElement('div');
+      s.className='star';
+      const size=Math.random()*2+1;
+      s.style.width=size+'px'; s.style.height=size+'px';
+      s.style.top=(Math.random()*100)+'%';
+      s.style.left=(Math.random()*100)+'%';
+      s.style.zIndex='-1';
+      document.body.appendChild(s);
+    }
+  </script>
+</body>
+</html>
