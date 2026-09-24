@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>Coleen N. Aclaro — Web and Mobile Developer</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800&family=Manrope:wght@400;500;600&display=swap">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#050507;--panel:#0e0e13;--ink:#f2f1f7;--soft:#a3a1b5;--line:#25242e;
+  --pink:#ff3fa4;--violet:#8b5cff;--blue:#3f7bff;--green:#2dff6e;--silver:#e9e9f2;
+  --holo:linear-gradient(115deg,var(--silver),var(--pink) 25%,var(--violet) 50%,var(--blue) 72%,var(--silver));
+  --display:'Unbounded','Arial Black',Helvetica,sans-serif;--body:'Manrope','Helvetica Neue',Arial,sans-serif}
+*,*::before,*::after{box-sizing:inherit}
+html{background:var(--bg);scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.7 var(--body);overflow-x:hidden}
+:focus-visible{outline:2px solid var(--green);outline-offset:4px}
+a{color:inherit}
+.glow{position:fixed;border-radius:50%;filter:blur(110px);opacity:.42;z-index:-1;pointer-events:none}
+.g1{width:480px;height:480px;background:var(--violet);top:-120px;right:-100px}
+.g2{width:420px;height:420px;background:var(--pink);top:55%;left:-160px;opacity:.28}
+.g3{width:380px;height:380px;background:var(--blue);bottom:-140px;right:10%;opacity:.3}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+header{display:flex;justify-content:space-between;align-items:center;padding:26px 0;flex-wrap:wrap;gap:10px}
+header b{font:600 18px var(--display)}
+nav{display:flex;gap:24px;font-size:15px;color:var(--soft);flex-wrap:wrap}
+nav a{text-decoration:none}nav a:hover{color:var(--ink)}
+.hero{padding:12vh 0 10vh}
+h1{font:800 clamp(40px,9vw,108px)/1 var(--display);margin:0 0 30px;letter-spacing:-.03em;padding-bottom:.08em;
+  background:var(--holo);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;
+  animation:sheen 9s ease-in-out infinite alternate}
+@keyframes sheen{to{background-position:100% 0}}
+.role{font:600 clamp(16px,2.4vw,22px) var(--display);margin:0 0 14px;color:var(--silver)}
+.lead{font-size:clamp(18px,2.2vw,21px);color:var(--soft);max-width:52ch;margin:0 0 36px}
+.btn{display:inline-block;text-decoration:none;font-weight:600;font-size:15px;padding:14px 28px;border-radius:99px;margin:0 10px 10px 0;transition:transform .2s,box-shadow .2s}
+.btn.fill{background:var(--green);color:#03150a}
+.btn.fill:hover{box-shadow:0 0 34px rgba(45,255,110,.5);transform:translateY(-2px)}
+.btn.line{border:1.5px solid transparent;background:linear-gradient(var(--bg),var(--bg)) padding-box,var(--holo) border-box}
+.btn.line:hover{transform:translateY(-2px);box-shadow:0 0 30px rgba(139,92,255,.5)}
+section{padding:64px 0}
+h2{font:600 clamp(26px,4.4vw,44px)/1.1 var(--display);margin:0 0 30px;letter-spacing:-.02em}
+h3{font:600 20px/1.3 var(--display);margin:0;letter-spacing:-.01em}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.card{display:flex;flex-direction:column;gap:10px;padding:28px;border-radius:24px;border:1.5px solid transparent;
+  background:linear-gradient(var(--panel),var(--panel)) padding-box,linear-gradient(135deg,var(--line),var(--line)) border-box;transition:transform .3s}
+.card:hover{transform:translateY(-4px);background:linear-gradient(var(--panel),var(--panel)) padding-box,var(--holo) border-box}
+.dot{width:44px;height:44px;border-radius:50%;background:var(--holo);box-shadow:0 0 30px rgba(139,92,255,.45)}
+.card:nth-child(2) .dot{background:linear-gradient(135deg,var(--green),var(--blue))}
+.card p{margin:0;color:var(--soft);font-size:16px}
+.card .t{margin-top:auto;padding-top:8px;font-size:14px;color:var(--silver)}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+.item{padding:0 0 22px;margin:0 0 22px;border-bottom:1px solid var(--line)}
+.item:last-child{border:0;margin:0}
+.item small{display:block;color:var(--soft);font-size:14px}
+.item h3{font-size:17px;margin:4px 0}
+.item p{margin:0;color:var(--soft);font-size:15px}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chips span{padding:8px 20px;border-radius:99px;border:1.5px solid transparent;font-size:15px;
+  background:linear-gradient(var(--bg),var(--bg)) padding-box,var(--holo) border-box}
+.chips span:nth-child(2n){background:linear-gradient(var(--bg),var(--bg)) padding-box,linear-gradient(115deg,var(--green),var(--blue)) border-box}
+.about p{color:var(--soft);max-width:60ch;margin:0 0 14px}
+.contact{text-align:center;padding:90px 0}
+.contact h2{font-size:clamp(32px,7vw,68px);padding-bottom:.08em;background:var(--holo);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+footer{border-top:1px solid var(--line);padding:26px 0 50px;color:var(--soft);font-size:14px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+@media (max-width:760px){.split{grid-template-columns:1fr;gap:10px}nav{gap:14px}}
+@media (prefers-reduced-motion:reduce){h1{animation:none}.btn,.card{transition:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="glow g1"></div><div class="glow g2"></div><div class="glow g3"></div>
+<div class="wrap">
+  <header>
+    <b>Coleen Aclaro</b>
+    <nav aria-label="Sections"><a href="#work">Projects</a><a href="#about">About</a><a href="#skills">Skills</a><a href="#credentials">Credentials</a><a href="#contact">Contact</a></nav>
+  </header>
+  <main>
+    <div class="hero">
+      <p class="role">BS Information Technology · Web and Mobile App Development</p>
+      <h1>Coleen N. Aclaro</h1>
+      <p class="lead">Fourth-year IT student at FEU Alabang, building web and mobile apps with a focus on clean code and good design. Looking for an internship in web and mobile development.</p>
+      <a class="btn fill" href="#work">See my projects</a><a class="btn line" href="#contact">Get in touch</a>
+    </div>
+
+    <section id="work" aria-labelledby="w">
+      <h2 id="w">Projects</h2>
+      <div class="grid">
+        <article class="card"><div class="dot"></div><h3>Balyo</h3><p>A web and mobile platform for community bartering in Barangay Balibago, Santa Rosa, Laguna. I worked on it as the mobile app developer and UI designer.</p><span class="t">Mobile development · UI design</span></article>
+        <article class="card"><div class="dot"></div><h3>Pokémon Battle Arena</h3><p>A retro browser battle game with type matchups, weather, shinies, catching to unlock Pokémon, two-player mode and save export. Built without frameworks.</p><span class="t">HTML · CSS · JavaScript · GitHub</span></article>
+      </div>
+    </section>
+
+    <section id="about" aria-labelledby="a">
+      <div class="about">
+        <h2 id="a">About</h2>
+        <p>I'm in my fourth year at FEU Alabang, taking a BS in Information Technology with a specialization in Web and Mobile App Development. I've been in school in Laguna and Alabang all the way from Grade 7, and I'm working toward graduating in 2027.</p>
+        <p>Outside code, I read a lot, especially long books, and I like writing and going for walks.</p>
+      </div>
+    </section>
+
+    <section id="skills" aria-labelledby="s">
+      <h2 id="s">Skills</h2>
+      <div class="chips">
+        <span>Web development</span><span>Mobile app development</span><span>UI/UX design</span><span>Database management</span>
+      </div>
+      <div class="chips" style="margin-top:16px">
+        <span>Python</span><span>C++</span><span>PHP</span><span>Dart (Flutter)</span><span>Java</span><span>JavaScript</span><span>HTML</span><span>CSS</span><span>Kotlin</span><span>SQL</span><span>SQLite</span><span>Firebase</span><span>Visual Studio</span><span>Android Studio</span>
+      </div>
+    </section>
+
+    <section id="credentials" aria-labelledby="cr">
+      <h2 id="cr">Credentials</h2>
+      <div class="split">
+        <div>
+          <div class="item"><small>Aug 2023 – Present</small><h3>FEU Alabang</h3><p>BS in Information Technology, Web and Mobile App Development. Expected graduation 2027.</p></div>
+          <div class="item"><small>Sep 2017 – Jul 2021</small><h3>Green Fields Integrated School of Laguna</h3><p>General Academic Strand. Graduated with honors.</p></div>
+          <div class="item"><small>Organizations</small><h3>FEU Alabang Junior Philippine Computer Society</h3><p>Member, Oct 2025 – present</p></div>
+          <div class="item"><h3>Google Developer Student Clubs</h3><p>Member, Sep 2023 – Sep 2024</p></div>
+        </div>
+        <div>
+          <div class="item"><small>July 2026</small><h3>CyberOps Associate</h3><p>Cisco Networking Academy</p></div>
+          <div class="item"><small>March 2025</small><h3>Networking (IT Specialist)</h3><p>Certiport</p></div>
+          <div class="item"><small>April 2026</small><h3>Dean's Lister (Bronze)</h3><p>FEU Alabang, 2TSY2526</p></div>
+          <div class="item"><small>2024 seminars</small><h3>AI and Robotics · Kotlin Essentials · Cloud Computing · Embedded Machine Learning with Arduino</h3><p>Attended, organized by FEU Alabang and the Institute of Computer Engineers of the Philippines</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact" aria-labelledby="c">
+      <h2 id="c">Let's build something.</h2>
+      <a class="btn fill" href="mailto:coleenaclaro@gmail.com">coleenaclaro@gmail.com</a><a class="btn line" href="#">GitHub</a><a class="btn line" href="#">LinkedIn</a>
+    </section>
+  </main>
+  <footer><span>© 2026 Coleen N. Aclaro</span><span>Santa Rosa, Laguna</span></footer>
+</div>
+</body>
+</html>
