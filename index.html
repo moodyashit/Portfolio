@@ -206,12 +206,16 @@
   .play-btn{display:inline-block; margin-top:12px; font-size:.8rem; border:1px solid var(--gold); color:var(--gold); padding:8px 16px; transition:background .35s ease, color .35s ease;}
   .play-btn:hover{background:var(--gold); color:var(--on-gold);}
 
-  .cert{border:1px dashed var(--dash); aspect-ratio:4/3; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; text-align:center; padding:14px; transition:border-color .35s ease, background .35s ease;}
+  .cert{border:1px dashed var(--dash); aspect-ratio:4/3; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; text-align:center; padding:14px; transition:border-color .35s ease, background .35s ease; position:relative; overflow:hidden;}
   .cert:hover{border-color:var(--gold); background:var(--hover-bg);}
   .cert[data-cert-target]{cursor:pointer;}
-  .cert .plus{font-size:1.6rem; color:var(--gold);}
-  .cert .name{font-size:.85rem; color:var(--star);}
-  .cert .issuer{font-size:.72rem; color:var(--mute);}
+  .cert .plus{font-size:1.6rem; color:var(--gold); position:relative; z-index:2;}
+  .cert .name{font-size:.85rem; color:var(--star); position:relative; z-index:2;}
+  .cert .issuer{font-size:.72rem; color:var(--mute); position:relative; z-index:2;}
+  .cert-thumb{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; opacity:.55; transition:opacity .35s ease, transform .5s ease;}
+  .cert[data-cert-target]:hover .cert-thumb{opacity:.8; transform:scale(1.04);}
+  .cert[data-cert-target]::before{content:""; position:absolute; inset:0; z-index:1;
+    background:linear-gradient(180deg, rgba(5,7,10,.35) 0%, rgba(5,7,10,.75) 100%);}
 
   .cert-lightbox{position:fixed; inset:0; z-index:50; display:none; align-items:center; justify-content:center;
     background:rgba(2,3,5,.88); padding:26px; padding-top:calc(26px + env(safe-area-inset-top,0px)); padding-bottom:calc(26px + env(safe-area-inset-bottom,0px));}
@@ -445,10 +449,10 @@
   </div>
   <p class="placeholder-tag" style="margin-top:22px;">Seminar attendance certificates — the titles below in Seminars link here on hover</p>
   <div class="grid" style="margin-top:12px;">
-    <div class="cert" id="cert-seminar-1" data-cert-target="cert-seminar-1-img" tabindex="0" role="button" aria-label="View AI and Robotics certificate"><div class="plus">↗</div><div class="name">AI and Robotics</div><div class="issuer">FEU Alabang · Jun 25, 2024</div><img id="cert-seminar-1-img" src="certs/ai-and-robotics.jpg" alt="" style="display:none;"></div>
-    <div class="cert" id="cert-seminar-2" data-cert-target="cert-seminar-2-img" tabindex="0" role="button" aria-label="View Kotlin Essentials certificate"><div class="plus">↗</div><div class="name">Kotlin Essentials</div><div class="issuer">ICpEP · Jun 18, 2024</div><img id="cert-seminar-2-img" src="certs/kotlin-essentials.jpg" alt="" style="display:none;"></div>
-    <div class="cert" id="cert-seminar-3" data-cert-target="cert-seminar-3-img" tabindex="0" role="button" aria-label="View Intro to Cloud Computing certificate"><div class="plus">↗</div><div class="name">Intro to Cloud Computing</div><div class="issuer">FEU Alabang · Jun 4, 2024</div><img id="cert-seminar-3-img" src="certs/intro-to-cloud-computing.jpg" alt="" style="display:none;"></div>
-    <div class="cert" id="cert-seminar-4" data-cert-target="cert-seminar-4-img" tabindex="0" role="button" aria-label="View Sensors to Decisions certificate"><div class="plus">↗</div><div class="name">Sensors to Decisions</div><div class="issuer">ICpEP · May 24, 2024</div><img id="cert-seminar-4-img" src="certs/sensors-to-decisions.jpg" alt="" style="display:none;"></div>
+    <div class="cert" id="cert-seminar-1" data-cert-target="cert-seminar-1-img" tabindex="0" role="button" aria-label="View AI and Robotics certificate"><img class="cert-thumb" src="certs/ai-and-robotics.jpg" alt=""><div class="plus">↗</div><div class="name">AI and Robotics</div><div class="issuer">FEU Alabang · Jun 25, 2024</div><img id="cert-seminar-1-img" src="certs/ai-and-robotics.jpg" alt="" style="display:none;"></div>
+    <div class="cert" id="cert-seminar-2" data-cert-target="cert-seminar-2-img" tabindex="0" role="button" aria-label="View Kotlin Essentials certificate"><img class="cert-thumb" src="certs/kotlin-essentials.jpg" alt=""><div class="plus">↗</div><div class="name">Kotlin Essentials</div><div class="issuer">ICpEP · Jun 18, 2024</div><img id="cert-seminar-2-img" src="certs/kotlin-essentials.jpg" alt="" style="display:none;"></div>
+    <div class="cert" id="cert-seminar-3" data-cert-target="cert-seminar-3-img" tabindex="0" role="button" aria-label="View Intro to Cloud Computing certificate"><img class="cert-thumb" src="certs/intro-to-cloud-computing.jpg" alt=""><div class="plus">↗</div><div class="name">Intro to Cloud Computing</div><div class="issuer">FEU Alabang · Jun 4, 2024</div><img id="cert-seminar-3-img" src="certs/intro-to-cloud-computing.jpg" alt="" style="display:none;"></div>
+    <div class="cert" id="cert-seminar-4" data-cert-target="cert-seminar-4-img" tabindex="0" role="button" aria-label="View Sensors to Decisions certificate"><img class="cert-thumb" src="certs/sensors-to-decisions.jpg" alt=""><div class="plus">↗</div><div class="name">Sensors to Decisions</div><div class="issuer">ICpEP · May 24, 2024</div><img id="cert-seminar-4-img" src="certs/sensors-to-decisions.jpg" alt="" style="display:none;"></div>
   </div>
 </section>
 
