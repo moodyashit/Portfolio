@@ -117,6 +117,11 @@
   .card:hover{transform:translateY(-4px); border-color:var(--gold); box-shadow:0 10px 30px -12px rgba(232,207,138,.25);}
   .card h3{font-size:1.05rem; color:var(--star); margin-bottom:4px;}
   .card .lvl{font-size:.75rem; color:var(--gold); letter-spacing:.05em;}
+  .chip-group{margin-top:34px;}
+  .chip-group h3{font-family:'Jost',sans-serif; font-weight:400; font-size:.7rem; letter-spacing:.25em; color:var(--lilac); text-transform:uppercase; margin-bottom:14px;}
+  .chips{display:flex; flex-wrap:wrap; gap:10px;}
+  .chip{font-size:.85rem; color:var(--star); background:var(--panel); border:1px solid #1c2c3f; border-radius:999px; padding:7px 16px; transition:transform .3s ease, border-color .3s ease, color .3s ease;}
+  .chip:hover{transform:translateY(-2px); border-color:var(--gold); color:var(--gold);}
   .btn-wrap{position:relative; display:inline-block;}
   .inline-fairy{z-index:4;}
   .zzz{position:absolute; top:-8px; right:-14px; font-family:'Cormorant Garamond',serif; font-style:italic; color:#8fb4e8;
@@ -236,6 +241,30 @@
     <div class="card"><h3>Mobile App Development</h3><span class="lvl">Expert</span></div>
     <div class="card"><h3>UI / UX Design</h3><span class="lvl">Advanced</span></div>
     <div class="card"><h3>Database Management</h3><span class="lvl">Advanced</span></div>
+  </div>
+  <div class="chip-group">
+    <h3>Languages</h3>
+    <div class="chips">
+      <span class="chip">Python</span>
+      <span class="chip">C++</span>
+      <span class="chip">PHP</span>
+      <span class="chip">Dart (Flutter)</span>
+      <span class="chip">Java</span>
+      <span class="chip">JavaScript</span>
+      <span class="chip">HTML</span>
+      <span class="chip">CSS</span>
+      <span class="chip">Kotlin</span>
+      <span class="chip">SQL</span>
+    </div>
+  </div>
+  <div class="chip-group">
+    <h3>Databases &amp; Tools</h3>
+    <div class="chips">
+      <span class="chip">SQLite</span>
+      <span class="chip">Firebase</span>
+      <span class="chip">Visual Studio</span>
+      <span class="chip">Android Studio</span>
+    </div>
   </div>
 </section>
 
@@ -365,14 +394,16 @@
   const navLinks = document.querySelectorAll('#navbar .nav-links a');
   window.addEventListener('scroll', ()=>{ navbar.classList.toggle('scrolled', window.scrollY > 40); }, {passive:true});
   const navSections = document.querySelectorAll('section[id]');
+  const setActive = (id)=>{ navLinks.forEach(a=>a.classList.toggle('active', a.dataset.sec === id)); };
+  // the last section is short, so it never reaches the middle band: treat "scrolled to bottom" as Contact
+  const atBottom = ()=> window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
   const navIO = new IntersectionObserver((entries)=>{
     entries.forEach(e=>{
-      if(e.isIntersecting){
-        navLinks.forEach(a=>a.classList.toggle('active', a.dataset.sec === e.target.id));
-      }
+      if(e.isIntersecting){ setActive(atBottom() ? 'get-in-touch' : e.target.id); }
     });
   }, {rootMargin:'-45% 0px -50% 0px'});
   navSections.forEach(s=>navIO.observe(s));
+  window.addEventListener('scroll', ()=>{ if(atBottom()) setActive('get-in-touch'); }, {passive:true});
 
   // hero parallax
   const heroEl = document.querySelector('header.hero');
