@@ -163,6 +163,7 @@
   @media (max-width:560px){ .grid{grid-template-columns:1fr;} }
   @media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important;} }
 </style>
+<noscript><style>.fade-up,.phone{opacity:1 !important; transform:none !important;}</style></noscript>
 </head>
 <body>
 <nav id="navbar">
@@ -364,15 +365,21 @@
   const navbar = document.getElementById('navbar');
   const navLinks = document.querySelectorAll('#navbar .nav-links a');
   window.addEventListener('scroll', ()=>{ navbar.classList.toggle('scrolled', window.scrollY > 40); }, {passive:true});
-  const navSections = document.querySelectorAll('section[id], footer[id]');
-  const navIO = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){
-        navLinks.forEach(a=>a.classList.toggle('active', a.dataset.sec === e.target.id));
-      }
-    });
-  }, {rootMargin:'-45% 0px -50% 0px'});
-  navSections.forEach(s=>navIO.observe(s));
+  const navSections = [...document.querySelectorAll('section[id], footer[id]')];
+  function updateActiveNav(){
+    const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+    let current = null;
+    if(atBottom){
+      current = 'contact';               // footer is too short to reach the mid-screen line, so force it at page end
+    } else {
+      const line = window.innerHeight * 0.4;
+      navSections.forEach(s=>{ if(s.getBoundingClientRect().top <= line) current = s.id; });
+    }
+    navLinks.forEach(a=>a.classList.toggle('active', a.dataset.sec === current));
+  }
+  window.addEventListener('scroll', updateActiveNav, {passive:true});
+  window.addEventListener('resize', updateActiveNav);
+  updateActiveNav();
 
   // hero parallax
   const heroEl = document.querySelector('header.hero');
@@ -415,6 +422,15 @@
     entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
   },{threshold:0.15});
   items.forEach(el=>io.observe(el));
+  // safety net: near the bottom of the page, always reveal the contact footer
+  function revealContactAtEnd(){
+    if(window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 200){
+      const c = document.getElementById('contact');
+      if(c) c.classList.add('in');
+    }
+  }
+  window.addEventListener('scroll', revealContactAtEnd, {passive:true});
+  revealContactAtEnd();
 
   const phones = document.querySelectorAll('.phone');
   const io2 = new IntersectionObserver((entries)=>{
