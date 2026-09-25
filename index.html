@@ -65,6 +65,10 @@
   :root[data-theme="light"] .theme-hint .msg{text-shadow:none;}
   .cv-btn{display:inline-block; margin-top:26px; font-size:.82rem; letter-spacing:.05em; color:var(--void); background:var(--gold); border:1px solid var(--gold); padding:11px 22px; border-radius:2px; transition:transform .3s ease, box-shadow .3s ease;}
   .cv-btn:hover{transform:translateY(-3px); box-shadow:0 10px 24px -10px rgba(232,207,138,.5);}
+  .cv-actions{display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:14px;}
+  .cv-preview-btn{margin-top:26px; font-size:.82rem; letter-spacing:.05em; color:var(--lilac); background:transparent; border:1px solid var(--line); padding:10px 20px; border-radius:2px; cursor:pointer; transition:border-color .3s ease, color .3s ease, transform .3s ease;}
+  .cv-preview-btn:hover{border-color:var(--gold); color:var(--gold); transform:translateY(-3px);}
+
   .cv-sub{display:inline-block; margin-top:14px; font-size:.78rem; color:var(--lilac); border-bottom:1px solid transparent; transition:border-color .3s ease;}
   .cv-sub:hover{border-color:var(--lilac);}
   .stack-tags{position:relative; display:flex; flex-wrap:wrap; gap:8px; margin:10px 0 14px;}
@@ -430,7 +434,8 @@
   @media print{
     *{animation:none !important; transition:none !important; box-shadow:none !important; text-shadow:none !important;}
     body{background:#fff !important; color:#111 !important;}
-    #sky, #day-layer, #fairy-layer, #theme-toggle, #sound-toggle, .theme-hint, .fairy, .fairy-hint, .ladybug, .ladybug-hint, .bubble{display:none !important;}
+    #sky, #day-layer, #fairy-layer, #theme-toggle, #sound-toggle, .theme-hint, .fairy, .fairy-hint, .ladybug, .ladybug-hint, .bubble,
+    #scroll-progress, #intro-veil, #egg-toast, #egg-ball, .cert-lightbox, #nav-scrim{display:none !important;}
     #navbar{position:static !important; background:none !important; backdrop-filter:none !important; box-shadow:none !important; padding:0 0 10px !important;}
     #navbar .nav-links, #navbar .nav-toggle, #nav-scrim{display:none !important;}
     #navbar .brand{color:#111 !important;}
@@ -439,9 +444,16 @@
     p, span, div, li{color:#222 !important;}
     .proj, .cert, section{background:#fff !important; border-color:#ccc !important;}
     .proj::after{display:none !important;}
-    .cv-btn, .cv-sub, .play-btn{display:none !important;}
+    .cv-btn, .cv-sub, .play-btn, .cv-preview-btn{display:none !important;}
     .phone{filter:none !important;}
     section{page-break-inside:avoid;}
+    /* show every project regardless of the on-screen filter selection */
+    .proj-filters{display:none !important;}
+    .proj.filtered-out{display:block !important;}
+    /* print the actual URL after links that would otherwise be dead ink on paper */
+    .contact-end .links a[href^="http"]::after,
+    .repo-badge[href]::after{content:" (" attr(href) ")"; font-size:.7em; word-break:break-all;}
+    .contact-end .links a[href^="mailto:"]::after{content:" (" attr(href) ")"; font-size:.7em;}
   }
 </style>
 <script>try{
@@ -450,6 +462,27 @@
   // no system-preference fallback: the site always opens in its default (dark) look
   // unless the visitor has explicitly toggled it before, on this exact origin.
 }catch(e){}</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Coleen N. Aclaro",
+  "alternateName": "C.A.",
+  "url": "https://moodyashit.github.io/Portfolio/",
+  "jobTitle": "BSIT Student",
+  "description": "BSIT student at FEU Alabang. Web & mobile developer building Baylo (a barter-trade marketplace app) and other projects.",
+  "affiliation": {
+    "@type": "CollegeOrUniversity",
+    "name": "FEU Alabang"
+  },
+  "email": "mailto:coleenaclaro@gmaill.com",
+  "sameAs": [
+    "https://www.linkedin.com/in/coleen-aclaro-4857a8381",
+    "https://github.com/moodyashit"
+  ],
+  "knowsAbout": ["Web Development", "Mobile App Development", "UI/UX Design", "Database Management", "Python", "JavaScript", "Flutter", "Dart"]
+}
+</script>
 </head>
 <body>
 <div id="scroll-progress"></div>
@@ -727,12 +760,16 @@
     <a href="https://www.linkedin.com/in/coleen-aclaro-4857a8381" target="_blank" rel="noopener">LinkedIn</a>
     <a href="https://github.com/moodyashit?tab=repositories" target="_blank" rel="noopener">GitHub</a>
   </div>
-  <a class="cv-btn" href="certs/Coleen-Aclaro-CV.pdf" download>Download CV ↓︎</a>
+  <div class="cv-actions">
+    <a class="cv-btn" href="certs/Coleen-Aclaro-CV.pdf" download>Download CV ↓︎</a>
+    <button type="button" class="cv-preview-btn" id="cv-preview-btn">Preview CV ↗︎</button>
+  </div>
   <br>
   <a class="repo-badge" href="https://github.com/moodyashit/Portfolio" target="_blank" rel="noopener" aria-label="View this site's source code on GitHub">
     <svg class="gh-icon" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.5 7.5 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
     <span class="gh-label">View source on GitHub ↗︎</span>
   </a>
+
   <p class="signoff">thank you for visiting my sky ✦</p>
 </section>
 
@@ -799,6 +836,9 @@
       closeNav();
     }
   }));
+  // a soft tick on every navbar interaction — link taps and opening/closing the mobile menu — muted by default
+  navLinks.forEach(a=>a.addEventListener('click', ()=>{ if(soundEnabled) playNavTick(); }));
+  navToggle.addEventListener('click', ()=>{ if(soundEnabled) playNavTick(navMenu.classList.contains('open')); });
   window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeNav(); });
   const navSections = document.querySelectorAll('section[id]');
   const setActive = (id)=>{ navLinks.forEach(a=>a.classList.toggle('active', a.dataset.sec === id)); };
@@ -906,7 +946,7 @@
     el.addEventListener('keydown', (ev)=>{ if(ev.key==='Enter'||ev.key===' '){ ev.preventDefault(); themeBtn.click(); } });
   });
 
-  // sound toggle: a tiny synthesized chime on theme switch, muted by default
+  // sound toggle: tiny synthesized chimes/ticks for theme switches and navbar interactions, muted by default
   let audioCtx = null;
   function getAudioCtx(){
     if(!audioCtx){ audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
@@ -931,6 +971,66 @@
       osc.stop(now + 0.6);
     }catch(e){ /* Web Audio unavailable; fail silently */ }
   }
+  // a short, soft tick for navbar interactions (link taps, opening/closing the mobile menu)
+  function playNavTick(pitchUp){
+    try{
+      const ctx = getAudioCtx();
+      const now = ctx.currentTime;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      const base = pitchUp ? 640 : 480;
+      osc.frequency.setValueAtTime(base, now);
+      osc.frequency.exponentialRampToValueAtTime(base * 1.15, now + 0.06);
+      gain.gain.setValueAtTime(0.0001, now);
+      gain.gain.linearRampToValueAtTime(0.035, now + 0.01);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.12);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.14);
+    }catch(e){ /* Web Audio unavailable; fail silently */ }
+  }
+  // a soft sparkle the very first time someone clicks a fairy
+  function playFairySparkle(){
+    try{
+      const ctx = getAudioCtx();
+      const now = ctx.currentTime;
+      [880, 1108, 1320].forEach((freq, i)=>{
+        const start = now + i*0.09;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, start);
+        gain.gain.setValueAtTime(0.0001, start);
+        gain.gain.linearRampToValueAtTime(0.045, start + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.0001, start + 0.22);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(start);
+        osc.stop(start + 0.24);
+      });
+    }catch(e){ /* Web Audio unavailable; fail silently */ }
+  }
+  // a soft, warm little "boop" the very first time someone clicks a ladybug
+  function playLadybugBoop(){
+    try{
+      const ctx = getAudioCtx();
+      const now = ctx.currentTime;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(320, now);
+      osc.frequency.exponentialRampToValueAtTime(200, now + 0.18);
+      gain.gain.setValueAtTime(0.0001, now);
+      gain.gain.linearRampToValueAtTime(0.06, now + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.28);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.3);
+    }catch(e){ /* Web Audio unavailable; fail silently */ }
+  }
   const soundBtn = document.getElementById('sound-toggle');
   let soundEnabled = false;
   try{ soundEnabled = localStorage.getItem('soundEnabled') === '1'; }catch(e){}
@@ -939,7 +1039,7 @@
     soundBtn.innerHTML = soundEnabled
       ? '<svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true"><path d="M9 2 4.5 5.5H2v5h2.5L9 14V2Z" fill="currentColor"/><path d="M11.5 5.3a3.5 3.5 0 0 1 0 5.4M13 3.6a6 6 0 0 1 0 8.8" stroke="currentColor" stroke-width="1.1" fill="none" stroke-linecap="round"/></svg>'
       : '<svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true"><path d="M9 2 4.5 5.5H2v5h2.5L9 14V2Z" fill="currentColor"/><path d="M11.5 6 14 8.5M14 6l-2.5 2.5" stroke="currentColor" stroke-width="1.1" fill="none" stroke-linecap="round"/></svg>';
-    soundBtn.setAttribute('aria-label', soundEnabled ? 'Mute theme-switch sound' : 'Enable theme-switch sound');
+    soundBtn.setAttribute('aria-label', soundEnabled ? 'Mute interface sounds' : 'Enable interface sounds');
   }
   if(soundBtn){
     paintSoundBtn();
@@ -1048,7 +1148,11 @@
       bubble.classList.add('show');
       clearTimeout(bubbleTimer);
       bubbleTimer = setTimeout(()=>bubble.classList.remove('show'), 3200);
-      if(firstFairyClick && hint){ hint.classList.add('hide'); firstFairyClick = false; }
+      if(firstFairyClick){
+        if(hint) hint.classList.add('hide');
+        if(soundEnabled) playFairySparkle();
+        firstFairyClick = false;
+      }
     });
   });
 
@@ -1094,7 +1198,11 @@
       bubble.classList.add('show');
       clearTimeout(ladybugBubbleTimer);
       ladybugBubbleTimer = setTimeout(()=>bubble.classList.remove('show'), 3200);
-      if(firstLadybugClick && ladybugHint){ ladybugHint.classList.add('hide'); firstLadybugClick = false; }
+      if(firstLadybugClick){
+        if(ladybugHint) ladybugHint.classList.add('hide');
+        if(soundEnabled) playLadybugBoop();
+        firstLadybugClick = false;
+      }
     });
   });
 
@@ -1124,6 +1232,8 @@
     certLightboxImg.src = '';
     certLightboxPdf.src = '';
     certLightboxIndex = -1;
+    document.getElementById('cert-lightbox-prev').style.display = '';
+    document.getElementById('cert-lightbox-next').style.display = '';
   }
   function openCertAt(i){
     if(certCards.length === 0) return;
@@ -1139,8 +1249,20 @@
     card.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); openCertAt(i); } });
   });
   certLightboxClose.addEventListener('click', closeCertLightbox);
-  document.getElementById('cert-lightbox-prev').addEventListener('click', ()=>openCertAt(certLightboxIndex - 1));
-  document.getElementById('cert-lightbox-next').addEventListener('click', ()=>openCertAt(certLightboxIndex + 1));
+  const certLightboxPrevBtn = document.getElementById('cert-lightbox-prev');
+  const certLightboxNextBtn = document.getElementById('cert-lightbox-next');
+  certLightboxPrevBtn.addEventListener('click', ()=>openCertAt(certLightboxIndex - 1));
+  certLightboxNextBtn.addEventListener('click', ()=>openCertAt(certLightboxIndex + 1));
+
+  // CV preview: reuses the cert lightbox's PDF viewer for a single, non-navigable document
+  const cvPreviewBtn = document.getElementById('cv-preview-btn');
+  if(cvPreviewBtn){
+    cvPreviewBtn.addEventListener('click', ()=>{
+      certLightboxPrevBtn.style.display = 'none';
+      certLightboxNextBtn.style.display = 'none';
+      openPdfLightbox('certs/Coleen-Aclaro-CV.pdf');
+    });
+  }
 
   // constellation lines connecting each project's stack tags, drawn on hover
   document.querySelectorAll('.stack-tags').forEach(group=>{
@@ -1289,6 +1411,11 @@
   })();
   certLightbox.addEventListener('click', (e)=>{ if(e.target===certLightbox) closeCertLightbox(); });
   window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeCertLightbox(); });
+
+  // a small constellation for anyone curious enough to open devtools
+  console.log('%c✦ you found the hidden sky ✦', 'color:#e8cf8a; font-family:serif; font-style:italic; font-size:16px;');
+  console.log('%cLooking under the hood — I respect that. Feel free to poke around; the source is on GitHub too.', 'color:#8fb4e8; font-size:12px;');
+  console.log('%cgithub.com/moodyashit/Portfolio', 'color:#7c8aa3; font-size:11px;');
 </script>
 </body>
 </html>
