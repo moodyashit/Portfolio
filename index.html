@@ -253,7 +253,10 @@
   .contact-end .signoff{font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--lilac); margin-top:36px; font-size:1rem;}
 
   @media (max-width:560px){ .grid{grid-template-columns:1fr;} }
-  @media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important;} }
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+    .phone, .fade-up{opacity:1 !important; transform:none !important;}
+  }
 
   @media (max-width:640px){
     .wrap{padding:0 20px;}
