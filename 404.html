@@ -9,8 +9,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --void:#05070a; --star:#fef6de; --gold:#e8cf8a; --lilac:#8fb4e8; --mute:#7c8aa3;
+    --void:#05070a; --star:#fef6de; --gold:#e8cf8a; --lilac:#8fb4e8; --mute:#7c8aa3; --heading:#fff;
     --sky-bg:radial-gradient(ellipse at 20% 10%, #14243a 0%, transparent 50%), radial-gradient(ellipse at 80% 70%, #101c2e 0%, transparent 55%), #05070a;
+  }
+  /* light mode: same daytime palette as the main site */
+  :root[data-theme="light"]{
+    --void:#fdf6e9; --star:#2a2540; --gold:#a8741a; --lilac:#4f6fb5; --mute:#6a6f85; --heading:#2a2540;
+    --sky-bg:linear-gradient(180deg,#bfe0ff 0%,#e3f1ff 35%,#fdf6e9 80%);
   }
   *{box-sizing:border-box;}
   html,body{height:100%; margin:0;}
@@ -18,8 +23,9 @@
     background:var(--sky-bg); color:var(--star); font-family:'Jost',sans-serif; font-weight:300;
     display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
     padding:24px; overflow:hidden; position:relative;
+    transition:background .4s ease, color .4s ease;
   }
-  h1{font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(2.6rem,9vw,4.2rem); margin:18px 0 6px; color:#fff;}
+  h1{font-family:'Cormorant Garamond',serif; font-weight:600; font-size:clamp(2.6rem,9vw,4.2rem); margin:18px 0 6px; color:var(--heading);}
   p{color:var(--mute); font-size:.95rem; max-width:380px; line-height:1.7; margin:0 0 26px;}
   a.home{font-size:.82rem; letter-spacing:.05em; color:var(--void); background:var(--gold); border:1px solid var(--gold);
     padding:11px 24px; border-radius:2px; text-decoration:none; transition:transform .3s ease, box-shadow .3s ease;}
@@ -27,8 +33,14 @@
   .fairy{width:78px; height:78px; animation:drift 4s ease-in-out infinite;}
   @keyframes drift{0%,100%{transform:translateY(0) rotate(-4deg);} 50%{transform:translateY(-14px) rotate(4deg);}}
   .star{position:absolute; border-radius:50%; background:var(--star); opacity:.6;}
+  :root[data-theme="light"] .star{opacity:.22;}
   @media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important;} }
 </style>
+<script>try{
+  var t=localStorage.getItem("theme");
+  if(t==="light"||t==="dark"){ document.documentElement.setAttribute("data-theme",t); }
+  // matches the main site: no system-preference fallback, only an explicit prior choice on this origin
+}catch(e){}</script>
 </head>
 <body>
   <svg class="fairy" viewBox="0 0 64 64" fill="none" aria-hidden="true">
