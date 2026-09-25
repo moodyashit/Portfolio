@@ -240,9 +240,11 @@
 
   .seminars ul{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:16px;}
   .seminars li{border-bottom:1px solid var(--line3); padding-bottom:14px;}
-  .seminars .s-title{display:inline-block; color:var(--star); font-size:.98rem; border-bottom:1px solid transparent; transition:color .3s ease, border-color .3s ease;}
-  .seminars a.s-title:hover{color:var(--gold); border-color:var(--gold);}
+  .s-title{display:inline-block; color:var(--star); border-bottom:1px solid transparent; transition:color .3s ease, border-color .3s ease;}
+  .seminars .s-title{font-size:.98rem;}
+  a.s-title:hover, a.s-title:focus-visible{color:var(--gold); border-color:var(--gold);}
   .seminars .s-meta{font-size:.75rem; color:var(--mute); margin-top:3px;}
+  .tl-item h3 a.s-title{font-size:inherit; font-family:inherit; font-weight:inherit;}
 
   .contact-end{padding:70px 0 90px; text-align:center;}
   .links{display:flex; gap:22px; justify-content:center; flex-wrap:wrap; margin-top:22px;}
@@ -465,9 +467,19 @@
       <div class="sub">Bachelor of Science in Information Technology</div>
     </div>
     <div class="tl-item">
+      <div class="when">April 16, 2026</div>
+      <h3><a class="s-title" href="#cert-deans-lister">Dean's Lister (Bronze) — 2TSY2526</a></h3>
+      <div class="sub">FEU Alabang Registrar's Office</div>
+    </div>
+    <div class="tl-item">
       <div class="when">Sep 2017 — Jul 2021</div>
       <h3>Green Fields Integrated School of Laguna</h3>
       <div class="sub">General Academic Strand</div>
+    </div>
+    <div class="tl-item">
+      <div class="when">February 1, 2023</div>
+      <h3><a class="s-title" href="#cert-with-honors">With Honors — Senior High School</a></h3>
+      <div class="sub">Green Fields Integrated School of Laguna</div>
     </div>
   </div>
 </section>
@@ -515,14 +527,14 @@
 <section class="fade-up" id="certifications">
   <span class="tag">CERTIFICATIONS</span>
   <h2>Certificates</h2>
-  <p class="placeholder-tag">Awards certificate - hover to see in full view</p>
+  <div class="grid">
+    <div class="cert" id="cert-cyberops" data-cert-target="cert-cyberops-img" tabindex="0" role="button" aria-label="View CyberOps Associate certificate"><img class="cert-thumb" src="certs/cyberops-associate.jpg" alt=""><div class="plus">↗︎</div><div class="name">CyberOps Associate</div><div class="issuer">Cisco Networking Academy · Jul 10, 2026</div><img id="cert-cyberops-img" src="certs/cyberops-associate.jpg" alt="" style="display:none;"></div>
+    <div class="cert" id="cert-networking" data-cert-target="cert-networking-img" tabindex="0" role="button" aria-label="View Networking (IT Specialist) certificate"><img class="cert-thumb" src="certs/networking-it-specialist.jpg" alt=""><div class="plus">↗︎</div><div class="name">Networking (IT Specialist)</div><div class="issuer">Certiport · Mar 15, 2025</div><img id="cert-networking-img" src="certs/networking-it-specialist.jpg" alt="" style="display:none;"></div>
+  </div>
+  <p class="placeholder-tag" style="margin-top:22px;">Awards certificate - hover to see in full view</p>
   <div class="grid" style="margin-top:12px;">
     <div class="cert" id="cert-deans-lister" data-cert-target="cert-deans-lister-img" tabindex="0" role="button" aria-label="View Dean's Lister Bronze certificate"><img class="cert-thumb" src="certs/deans-lister-bronze.png" alt=""><div class="plus">↗︎</div><div class="name">Dean's Lister (Bronze)</div><div class="issuer">FEU Alabang Registrar's Office · Apr 16, 2026</div><img id="cert-deans-lister-img" src="certs/deans-lister-bronze.png" alt="" style="display:none;"></div>
     <div class="cert" id="cert-with-honors" data-cert-target="cert-with-honors-img" tabindex="0" role="button" aria-label="View With Honors certificate"><img class="cert-thumb" src="certs/with-honors-shs.jpg" alt=""><div class="plus">↗︎</div><div class="name">With Honors (2nd Quarter)</div><div class="issuer">Green Fields Integrated School of Laguna · Feb 1, 2023</div><img id="cert-with-honors-img" src="certs/with-honors-shs.jpg" alt="" style="display:none;"></div>
-  </div>
-  <div class="grid" style="margin-top:22px;">
-    <div class="cert" id="cert-cyberops" data-cert-target="cert-cyberops-img" tabindex="0" role="button" aria-label="View CyberOps Associate certificate"><img class="cert-thumb" src="certs/cyberops-associate.jpg" alt=""><div class="plus">↗︎</div><div class="name">CyberOps Associate</div><div class="issuer">Cisco Networking Academy · Jul 10, 2026</div><img id="cert-cyberops-img" src="certs/cyberops-associate.jpg" alt="" style="display:none;"></div>
-    <div class="cert" id="cert-networking" data-cert-target="cert-networking-img" tabindex="0" role="button" aria-label="View Networking (IT Specialist) certificate"><img class="cert-thumb" src="certs/networking-it-specialist.jpg" alt=""><div class="plus">↗︎</div><div class="name">Networking (IT Specialist)</div><div class="issuer">Certiport · Mar 15, 2025</div><img id="cert-networking-img" src="certs/networking-it-specialist.jpg" alt="" style="display:none;"></div>
   </div>
   <p class="placeholder-tag" style="margin-top:22px;">Seminar attendance certificates — the titles below in Seminars link here on hover</p>
   <div class="grid" style="margin-top:12px;">
