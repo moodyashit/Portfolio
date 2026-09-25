@@ -18,7 +18,7 @@
     --star:#fef6de; --gold:#e8cf8a; --lilac:#8fb4e8; --mute:#7c8aa3;
     --line:#1c2c3f; --line2:#16212f; --line3:#131f2c; --dash:#25384f; --soft:#dbe6f2; --soft2:#cfc8e2;
     --hover-bg:#0e1c2b; --ring2:#4d7fc4; --on-gold:#05070a; --hover-text:#fff; --h1-top:#fff;
-    --nav-bg:rgba(5,7,10,.72); --nav-bg0:rgba(5,7,10,0); --nav-drawer-bg:rgba(8,13,21,.97);
+    --nav-bg:rgba(5,7,10,.72); --nav-bg0:rgba(5,7,10,0); --nav-drawer-bg:rgba(16,25,38,.96);
     --sky-bg:radial-gradient(ellipse at 20% 10%, #14243a 0%, transparent 50%), radial-gradient(ellipse at 80% 70%, #101c2e 0%, transparent 55%), #05070a;
     box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
   }
@@ -232,10 +232,14 @@
     background:rgba(2,3,5,.88); padding:26px; padding-top:calc(26px + env(safe-area-inset-top,0px)); padding-bottom:calc(26px + env(safe-area-inset-bottom,0px));}
   .cert-lightbox.show{display:flex;}
   .cert-lightbox img{max-width:100%; max-height:100%; border:1px solid var(--line); box-shadow:0 20px 60px -20px rgba(0,0,0,.6);}
+  .cert-lightbox iframe{width:min(92vw,900px); height:min(86vh,1050px); border:1px solid var(--line); background:#fff; box-shadow:0 20px 60px -20px rgba(0,0,0,.6);}
   .cert-lightbox-close{position:absolute; top:calc(18px + env(safe-area-inset-top,0px)); right:20px; width:40px; height:40px; border-radius:50%;
     border:1px solid var(--line); background:var(--panel); color:var(--gold); font-size:1.3rem; line-height:1; cursor:pointer;
     display:flex; align-items:center; justify-content:center;}
   .cert-lightbox-close:hover{border-color:var(--gold);}
+  .tl-item.award{cursor:pointer;}
+  .tl-view{display:inline-block; margin-top:6px; font-size:.72rem; color:var(--lilac); border-bottom:1px solid transparent; transition:border-color .3s ease, color .3s ease;}
+  .tl-item.award:hover .tl-view, .tl-item.award:focus-visible .tl-view{color:var(--gold); border-color:var(--gold);}
 
   .seminars ul{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:16px;}
   .seminars li{border-bottom:1px solid var(--line3); padding-bottom:14px;}
@@ -299,7 +303,7 @@
     .nav-cloud::after{width:15px; height:15px; top:-6px; left:23px;}
     :root[data-theme="light"] .nav-star{display:none;}
     :root[data-theme="light"] .nav-cloud{display:block;}
-    #nav-scrim{display:block; position:fixed; inset:0; z-index:24; background:rgba(0,0,0,.35);
+    #nav-scrim{display:block; position:fixed; inset:0; z-index:19; background:rgba(0,0,0,.35);
       opacity:0; pointer-events:none; transition:opacity .3s ease;}
     #nav-scrim.show{opacity:1; pointer-events:auto;}
   }
@@ -463,20 +467,22 @@
       <h3>FEU Alabang</h3>
       <div class="sub">Bachelor of Science in Information Technology</div>
     </div>
-    <div class="tl-item">
+    <div class="tl-item award" data-img="certs/deans-lister-bronze.png" tabindex="0" role="button" aria-label="View Dean's Lister Bronze certificate">
       <div class="when">April 16, 2026</div>
       <h3>Dean's Lister (Bronze) — 2TSY2526</h3>
       <div class="sub">FEU Alabang Registrar's Office</div>
+      <span class="tl-view">View certificate</span>
     </div>
     <div class="tl-item">
       <div class="when">Sep 2017 — Jul 2021</div>
       <h3>Green Fields Integrated School of Laguna</h3>
       <div class="sub">General Academic Strand</div>
     </div>
-    <div class="tl-item">
+    <div class="tl-item award" data-pdf="" tabindex="0" role="button" aria-label="View With Honors certificate">
       <div class="when">February 1, 2023</div>
       <h3>With Honors — Senior High School</h3>
       <div class="sub">Green Fields Integrated School of Laguna</div>
+      <span class="tl-view">View certificate</span>
     </div>
   </div>
 </section>
@@ -579,6 +585,7 @@
 <div class="cert-lightbox" id="cert-lightbox">
   <span class="cert-lightbox-close" id="cert-lightbox-close">&times;</span>
   <img id="cert-lightbox-img" src="" alt="Certificate">
+  <iframe id="cert-lightbox-pdf" title="Certificate PDF" style="display:none;"></iframe>
 </div>
 
 <script>
@@ -825,20 +832,40 @@
   // certificate lightbox (avoids browsers blocking data: URI navigation in a new tab)
   const certLightbox = document.getElementById('cert-lightbox');
   const certLightboxImg = document.getElementById('cert-lightbox-img');
+  const certLightboxPdf = document.getElementById('cert-lightbox-pdf');
   const certLightboxClose = document.getElementById('cert-lightbox-close');
   function openCertLightbox(src){
+    certLightboxPdf.style.display = 'none';
+    certLightboxPdf.src = '';
+    certLightboxImg.style.display = '';
     certLightboxImg.src = src;
+    certLightbox.classList.add('show');
+  }
+  function openPdfLightbox(src){
+    certLightboxImg.style.display = 'none';
+    certLightboxImg.src = '';
+    certLightboxPdf.style.display = '';
+    certLightboxPdf.src = src;
     certLightbox.classList.add('show');
   }
   function closeCertLightbox(){
     certLightbox.classList.remove('show');
     certLightboxImg.src = '';
+    certLightboxPdf.src = '';
   }
   document.querySelectorAll('.cert[data-cert-target]').forEach(card=>{
     const img = document.getElementById(card.dataset.certTarget);
     if(!img) return;
     card.addEventListener('click', ()=>openCertLightbox(img.src));
     card.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); openCertLightbox(img.src); } });
+  });
+  document.querySelectorAll('.tl-item.award[data-pdf], .tl-item.award[data-img]').forEach(item=>{
+    const pdfSrc = item.dataset.pdf;
+    const imgSrc = item.dataset.img;
+    const open = imgSrc ? ()=>openCertLightbox(imgSrc) : (pdfSrc ? ()=>openPdfLightbox(pdfSrc) : null);
+    if(!open) return;
+    item.addEventListener('click', open);
+    item.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); open(); } });
   });
   certLightboxClose.addEventListener('click', closeCertLightbox);
   certLightbox.addEventListener('click', (e)=>{ if(e.target===certLightbox) closeCertLightbox(); });
