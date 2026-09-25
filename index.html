@@ -71,6 +71,63 @@
   .stack-tags span{font-size:.7rem; color:var(--lilac); border:1px solid var(--line); border-radius:999px; padding:3px 11px;}
   #theme-toggle{position:fixed; right:18px; bottom:calc(18px + env(safe-area-inset-bottom,0px)); z-index:30; width:44px; height:44px; border-radius:50%; border:1px solid var(--line); background:var(--panel); color:var(--gold); font-size:1.15rem; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow:0 6px 20px -8px rgba(0,0,0,.4); transition:transform .3s ease, border-color .3s ease;}
   #theme-toggle:hover{transform:scale(1.08); border-color:var(--gold);}
+  :root[data-theme="light"] #theme-toggle{background:transparent;}
+
+  /* scroll progress */
+  #scroll-progress{position:fixed; top:0; left:0; height:2px; width:0%; z-index:40;
+    background:linear-gradient(90deg, var(--lilac), var(--gold)); box-shadow:0 0 8px 1px rgba(232,207,138,.6);
+    transition:width .12s ease-out;}
+
+  /* intro veil: constellation-forming entrance */
+  #intro-veil{position:fixed; inset:0; z-index:60; background:var(--void); display:flex; align-items:center; justify-content:center;
+    transition:opacity .7s ease; pointer-events:none;}
+  #intro-veil.hide{opacity:0;}
+  #intro-veil .iv-dot{position:absolute; width:3px; height:3px; border-radius:50%; background:var(--star);
+    box-shadow:0 0 6px 1px var(--star); animation:ivConverge 1.1s cubic-bezier(.2,.8,.3,1) forwards;}
+  #intro-veil .iv-spark{font-size:1.6rem; color:var(--gold); opacity:0; animation:ivGlyph 1.3s ease-out .5s forwards;}
+  @keyframes ivConverge{0%{transform:translate(var(--ix), var(--iy)) scale(1); opacity:.9;} 100%{transform:translate(0,0) scale(.2); opacity:0;}}
+  @keyframes ivGlyph{0%{opacity:0; transform:scale(.6);} 50%{opacity:1; transform:scale(1.15);} 100%{opacity:0; transform:scale(1);}}
+  /* light-mode entrance: sunbeams gathering + a couple of clouds drifting past, instead of stars */
+  #intro-veil .iv-ray{position:absolute; width:56px; height:5px; border-radius:3px; background:linear-gradient(90deg, transparent, #ffdd88); opacity:0;
+    animation:ivRayIn 1.15s cubic-bezier(.2,.8,.3,1) forwards;}
+  #intro-veil .iv-sunglow{position:absolute; width:70px; height:70px; border-radius:50%;
+    background:radial-gradient(circle, #fff6c9 0%, #ffe08a 55%, rgba(255,224,138,0) 72%); opacity:0;
+    animation:ivSunGlow 1.3s ease-out .25s forwards;}
+  #intro-veil .iv-cloud{position:absolute; top:38%; width:60px; height:17px; background:#fff; border-radius:20px; opacity:0;
+    animation:ivCloudIn 1.4s ease-out forwards;}
+  #intro-veil .iv-cloud::before,#intro-veil .iv-cloud::after{content:""; position:absolute; background:#fff; border-radius:50%;}
+  #intro-veil .iv-cloud::before{width:27px; height:27px; top:-13px; left:9px;}
+  #intro-veil .iv-cloud::after{width:20px; height:20px; top:-8px; left:31px;}
+  @keyframes ivRayIn{0%{transform:translate(var(--rx), var(--ry)) scaleX(.5); opacity:0;} 55%{opacity:.9;} 100%{transform:translate(0,0) scaleX(1); opacity:0;}}
+  @keyframes ivSunGlow{0%{transform:scale(.25); opacity:0;} 55%{transform:scale(1); opacity:.9;} 100%{transform:scale(1.5); opacity:0;}}
+  @keyframes ivCloudIn{0%{transform:translateX(var(--cx)); opacity:0;} 45%{opacity:.85;} 100%{transform:translateX(0); opacity:0;}}
+  @media (prefers-reduced-motion: reduce){ #intro-veil{display:none;} }
+
+  /* learning line */
+  .learning-line{margin-top:14px; font-size:.78rem; color:var(--mute); display:flex; align-items:center; gap:7px;}
+  .learning-line .dot{width:6px; height:6px; border-radius:50%; background:var(--gold); box-shadow:0 0 6px 1px rgba(232,207,138,.6); animation:twinkle 2.4s ease-in-out infinite; flex:0 0 auto;}
+
+  /* project filter tags */
+  .proj-filters{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px;}
+  .proj-filters button{font-size:.72rem; letter-spacing:.03em; color:var(--lilac); background:transparent; border:1px solid var(--line); border-radius:999px; padding:6px 14px; cursor:pointer; transition:border-color .25s ease, color .25s ease, background .25s ease;}
+  .proj-filters button:hover{border-color:var(--gold); color:var(--gold);}
+  .proj-filters button.active{background:var(--gold); border-color:var(--gold); color:var(--on-gold);}
+  .proj{transition:opacity .35s ease, transform .35s ease;}
+  .proj.filtered-out{display:none;}
+
+  /* logo easter egg */
+  #navbar .brand{cursor:pointer; user-select:none;}
+  #egg-toast{position:fixed; left:50%; bottom:calc(84px + env(safe-area-inset-bottom,0px)); transform:translateX(-50%) translateY(10px); z-index:31;
+    background:var(--panel); border:1px solid var(--gold); color:var(--star); font-family:'Cormorant Garamond',serif; font-style:italic; font-size:.9rem;
+    padding:9px 18px; border-radius:999px; opacity:0; pointer-events:none; transition:opacity .35s ease, transform .35s ease; white-space:nowrap;}
+  #egg-toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+  #egg-ball{position:fixed; top:50%; left:-40px; width:26px; height:26px; z-index:32; pointer-events:none; opacity:0;}
+  #egg-ball.go{animation:eggRoll 1.6s cubic-bezier(.3,.6,.4,1) forwards;}
+  @keyframes eggRoll{
+    0%{left:-40px; top:50%; opacity:1; transform:rotate(0deg);}
+    85%{opacity:1;}
+    100%{left:110%; top:38%; opacity:0; transform:rotate(900deg);}
+  }
 
   *{box-sizing:border-box;}
   a:focus-visible, button:focus-visible{outline:2px solid var(--gold); outline-offset:3px; border-radius:2px;}
@@ -138,6 +195,24 @@
   .fairy-hint .msg{font-family:'Cormorant Garamond',serif; font-style:italic; font-size:.95rem; color:var(--gold); white-space:nowrap; text-shadow:0 0 10px rgba(232,207,138,.5);}
   .fairy-hint .arrow{font-size:1.4rem; margin-top:2px;}
   @keyframes hintbob{0%,100%{transform:translateY(0);} 50%{transform:translateY(-9px);}}
+
+  /* light mode: ladybugs crawling along the section fold lines, counterpart to the fairies */
+  .ladybug{display:none; position:absolute; top:-7px; left:6%; opacity:.9; cursor:pointer; pointer-events:auto; z-index:2;
+    animation:crawl var(--ld,15s) ease-in-out infinite; animation-delay:var(--ldl,0s);}
+  :root[data-theme="light"] .ladybug{display:block;}
+  .ladybug svg{display:block; width:var(--ls,20px); height:var(--ls,20px); filter:drop-shadow(0 1px 2px rgba(120,40,10,.25));}
+  @keyframes crawl{
+    0%{transform:translateX(0) rotate(0deg);}
+    22%{transform:translateX(46px) rotate(5deg);}
+    50%{transform:translateX(96px) rotate(-3deg);}
+    78%{transform:translateX(46px) rotate(4deg);}
+    100%{transform:translateX(0) rotate(0deg);}
+  }
+  .ladybug-hint{display:none; position:absolute; top:14px; left:6%; z-index:3; text-align:center; opacity:1; transition:opacity .6s ease; animation:hintbob 2.4s ease-in-out infinite;}
+  :root[data-theme="light"] .ladybug-hint{display:block;}
+  .ladybug-hint.hide{opacity:0; pointer-events:none;}
+  .ladybug-hint .msg{font-family:'Cormorant Garamond',serif; font-style:italic; font-size:.95rem; color:var(--gold); white-space:nowrap;}
+  .ladybug-hint .arrow{font-size:1.3rem; margin-top:2px;}
 
   .wrap{position:relative; z-index:1; max-width:720px; margin:0 auto; padding:0 28px;}
 
@@ -266,6 +341,7 @@
     section h2{margin-bottom:24px;}
     .moon, .sun{width:58px; height:58px; top:5%; right:7%;}
     .fairy, .fairy-hint{display:none !important;}
+    .ladybug, .ladybug-hint{display:none !important;}
     .spark{display:none;}
     .theme-hint{display:none;}
     /* no transform on #navbar itself: a transform here would make it the
@@ -315,7 +391,7 @@
   @media print{
     *{animation:none !important; transition:none !important; box-shadow:none !important; text-shadow:none !important;}
     body{background:#fff !important; color:#111 !important;}
-    #sky, #day-layer, #fairy-layer, #theme-toggle, .theme-hint, .fairy, .fairy-hint, .bubble{display:none !important;}
+    #sky, #day-layer, #fairy-layer, #theme-toggle, .theme-hint, .fairy, .fairy-hint, .ladybug, .ladybug-hint, .bubble{display:none !important;}
     #navbar{position:static !important; background:none !important; backdrop-filter:none !important; box-shadow:none !important; padding:0 0 10px !important;}
     #navbar .nav-links, #navbar .nav-toggle, #nav-scrim{display:none !important;}
     #navbar .brand{color:#111 !important;}
@@ -337,8 +413,12 @@
 }catch(e){}</script>
 </head>
 <body>
+<div id="scroll-progress"></div>
+<div id="intro-veil"></div>
+<div id="egg-toast"></div>
+<svg id="egg-ball" viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="#e8cf8a"/><path d="M2 32h60" stroke="#05070a" stroke-width="4"/><circle cx="32" cy="32" r="9" fill="#05070a"/><circle cx="32" cy="32" r="5" fill="#e8cf8a"/></svg>
 <nav id="navbar">
-  <a href="#top" class="brand">C.A.</a>
+  <a href="#top" class="brand" id="brand-logo">C.A.</a>
   <button id="nav-toggle" class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span></button>
   <div class="nav-links" id="nav-links">
     <div class="nav-sky" aria-hidden="true">
@@ -410,6 +490,13 @@
 </header>
 
 <section class="profile fade-up" id="about">
+  <div class="ladybug" style="left:10%; --ls:22px; --ld:14s;">
+    <svg viewBox="0 0 64 64" fill="none"><ellipse cx="32" cy="36" rx="20" ry="16" fill="#d43f2f"/><path d="M32 20a20 16 0 0 0-20 16h40a20 16 0 0 0-20-16z" fill="#2a2540"/><line x1="32" y1="20" x2="32" y2="52" stroke="#2a2540" stroke-width="2"/><circle cx="22" cy="34" r="3" fill="#2a2540"/><circle cx="24" cy="46" r="2.6" fill="#2a2540"/><circle cx="42" cy="34" r="3" fill="#2a2540"/><circle cx="40" cy="46" r="2.6" fill="#2a2540"/><circle cx="26" cy="17" r="2.2" fill="#2a2540"/><circle cx="38" cy="17" r="2.2" fill="#2a2540"/></svg>
+  </div>
+  <div class="ladybug-hint">
+    <div class="msg">Psst — the ladybugs talk too ✦</div>
+    <div class="arrow">↖︎</div>
+  </div>
   <span class="tag">ABOUT</span>
   <div class="about-row">
     <div class="portrait-wrap">
@@ -418,6 +505,7 @@
     <div>
       <h2>The story so far</h2>
       <p>I'm currently in my 4th year of college. I went to GFIS from Grade 7 all the way to Grade 12, so I've basically been in school forever at this point. I like reading — especially really long books — and I can easily get lost in a good story for hours. Right now, I'm just trying to survive my last year of college and hopefully make it to graduation in one piece.</p>
+      <p class="learning-line"><span class="dot"></span>Currently learning: refining Baylo's AI matching · last updated Sep 2026</p>
       <a class="cv-sub" href="https://paraverse.feutech.edu.ph/briefcase/profile/57000013202A" target="_blank" rel="noopener">View Briefcase profile ↗︎</a>
     </div>
   </div>
@@ -463,6 +551,9 @@
 </section>
 
 <section class="fade-up" id="education">
+  <div class="ladybug" style="left:78%; --ls:16px; --ld:11s; --ldl:2s;">
+    <svg viewBox="0 0 64 64" fill="none"><ellipse cx="32" cy="36" rx="20" ry="16" fill="#d43f2f"/><path d="M32 20a20 16 0 0 0-20 16h40a20 16 0 0 0-20-16z" fill="#2a2540"/><line x1="32" y1="20" x2="32" y2="52" stroke="#2a2540" stroke-width="2"/><circle cx="22" cy="34" r="3" fill="#2a2540"/><circle cx="24" cy="46" r="2.6" fill="#2a2540"/><circle cx="42" cy="34" r="3" fill="#2a2540"/><circle cx="40" cy="46" r="2.6" fill="#2a2540"/><circle cx="26" cy="17" r="2.2" fill="#2a2540"/><circle cx="38" cy="17" r="2.2" fill="#2a2540"/></svg>
+  </div>
   <span class="tag">EDUCATION &amp; AWARDS</span>
   <h2>Where I've been</h2>
   <div class="timeline">
@@ -490,9 +581,18 @@
 </section>
 
 <section class="fade-up" id="projects">
+  <div class="ladybug" style="left:40%; --ls:20px; --ld:16s; --ldl:.8s;">
+    <svg viewBox="0 0 64 64" fill="none"><ellipse cx="32" cy="36" rx="20" ry="16" fill="#d43f2f"/><path d="M32 20a20 16 0 0 0-20 16h40a20 16 0 0 0-20-16z" fill="#2a2540"/><line x1="32" y1="20" x2="32" y2="52" stroke="#2a2540" stroke-width="2"/><circle cx="22" cy="34" r="3" fill="#2a2540"/><circle cx="24" cy="46" r="2.6" fill="#2a2540"/><circle cx="42" cy="34" r="3" fill="#2a2540"/><circle cx="40" cy="46" r="2.6" fill="#2a2540"/><circle cx="26" cy="17" r="2.2" fill="#2a2540"/><circle cx="38" cy="17" r="2.2" fill="#2a2540"/></svg>
+  </div>
   <span class="tag">PROJECTS</span>
   <h2>Things I've made</h2>
-  <div class="proj">
+  <div class="proj-filters" id="proj-filters">
+    <button type="button" class="active" data-filter="all">All</button>
+    <button type="button" data-filter="game">Game</button>
+    <button type="button" data-filter="mobile">Mobile</button>
+    <button type="button" data-filter="web">Web</button>
+  </div>
+  <div class="proj" data-tags="game web">
     <h3>Pokémon Battle Arena</h3>
     <div class="stack">HCI final project, enhanced and expanded</div>
     <div class="stack-tags"><span>JavaScript</span><span>HTML</span><span>CSS</span></div>
@@ -506,7 +606,7 @@
       </div>
     </div>
   </div>
-  <div class="proj">
+  <div class="proj" data-tags="mobile">
     <h3>Baylo</h3>
     <div class="stack">Mobile app · barter &amp; trade marketplace with AI matching</div>
     <div class="stack-tags"><span>Dart (Flutter)</span><span>Firebase</span><span>SQLite</span></div>
@@ -562,6 +662,9 @@
 </section>
 
 <section class="fade-up" id="organizations">
+  <div class="ladybug" style="left:16%; --ls:18px; --ld:13s; --ldl:1.6s;">
+    <svg viewBox="0 0 64 64" fill="none"><ellipse cx="32" cy="36" rx="20" ry="16" fill="#d43f2f"/><path d="M32 20a20 16 0 0 0-20 16h40a20 16 0 0 0-20-16z" fill="#2a2540"/><line x1="32" y1="20" x2="32" y2="52" stroke="#2a2540" stroke-width="2"/><circle cx="22" cy="34" r="3" fill="#2a2540"/><circle cx="24" cy="46" r="2.6" fill="#2a2540"/><circle cx="42" cy="34" r="3" fill="#2a2540"/><circle cx="40" cy="46" r="2.6" fill="#2a2540"/><circle cx="26" cy="17" r="2.2" fill="#2a2540"/><circle cx="38" cy="17" r="2.2" fill="#2a2540"/></svg>
+  </div>
   <span class="tag">ORGANIZATIONS</span>
   <h2>Where I show up</h2>
   <div class="timeline">
@@ -710,7 +813,7 @@
   const favDark = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%2314243a'/%3E%3Cpath d='M32 12l5 15 15 5-15 5-5 15-5-15-15-5 15-5z' fill='%23e8cf8a'/%3E%3C/svg%3E";
   const favLight = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23bfe0ff'/%3E%3Cpath d='M32 12l5 15 15 5-15 5-5 15-5-15-15-5 15-5z' fill='%23a8741a'/%3E%3C/svg%3E";
   const sunGlyph = '<svg viewBox="0 0 40 40" width="20" height="20" aria-hidden="true"><g fill="currentColor"><ellipse cx="20" cy="5.5" rx="2.1" ry="5" transform="rotate(0 20 20)"/><ellipse cx="20" cy="5.5" rx="2.1" ry="5" transform="rotate(45 20 20)"/><ellipse cx="20" cy="5.5" rx="2.1" ry="5" transform="rotate(90 20 20)"/><ellipse cx="20" cy="5.5" rx="2.1" ry="5" transform="rotate(135 20 20)"/><ellipse cx="20" cy="5.5" rx="2.1" ry="5" transform="rotate(180 20 20)"/><ellipse cx="20" cy="5.5" rx="2.1" ry="5" transform="rotate(225 20 20)"/><ellipse cx="20" cy="5.5" rx="2.1" ry="5" transform="rotate(270 20 20)"/><ellipse cx="20" cy="5.5" rx="2.1" ry="5" transform="rotate(315 20 20)"/></g><circle cx="20" cy="20" r="8.3" fill="currentColor"/></svg>';
-  const moonGlyph = '<svg viewBox="0 0 40 40" width="20" height="20" aria-hidden="true"><path d="M25 6.5c-8 0-14.5 6.3-14.5 14s6.5 14 14.5 14c3 0 5.9-.9 8.3-2.5-9.2-.8-16.3-8-16.3-16.8 0-4.1 1.5-7.9 4-10.8A14.9 14.9 0 0 0 25 6.5z" fill="currentColor"/><circle cx="19.5" cy="16.5" r="1.3" fill="currentColor" opacity=".5"/><circle cx="15.5" cy="23.5" r="1" fill="currentColor" opacity=".5"/></svg>';
+  const moonGlyph = '<svg viewBox="0 0 40 40" width="20" height="20" aria-hidden="true"><path d="M25 6.5c-8 0-14.5 6.3-14.5 14s6.5 14 14.5 14c3 0 5.9-.9 8.3-2.5-9.2-.8-16.3-8-16.3-16.8 0-4.1 1.5-7.9 4-10.8A14.9 14.9 0 0 0 25 6.5z" fill="currentColor"/></svg>';
   const paintBtn = ()=>{
     const light = document.documentElement.getAttribute('data-theme') === 'light';
     themeBtn.innerHTML = light ? moonGlyph : sunGlyph;
@@ -837,6 +940,52 @@
     });
   });
 
+  // ladybug dialogue (light mode counterpart to the fairies)
+  const ladybugLines = [
+    "Hello, sunshine ✦",
+    "She actually saw daylight today. Big milestone.",
+    "Lucky bug says: she'll graduate. Probably. Eventually.",
+    "She traded her fairies for bugs and no one asked why.",
+    "Ask her about Baylo. She'll talk your ear off.",
+    "Bronze Dean's Lister, still can't find her charger.",
+    "She reads for hours and calls it 'research.'",
+    "Four years at FEU and she still gets lost on campus.",
+    "She's basically fluent in error messages by now.",
+    "She named her variables after snacks again.",
+    "No work experience yet, but the ladybugs believe in her.",
+    "She built a Pokémon game just to see if she could.",
+    "She swears she's a morning person now. She is lying.",
+    "Somewhere between graduating and panicking, gracefully.",
+    "Ask her about UI/UX — she has opinions.",
+    "She deleted a whole project last week. Don't ask.",
+    "Landing on her is good luck. Hiring her is better luck.",
+    "She built us just so daylight wouldn't feel so empty."
+  ];
+  let ladybugQueue = [];
+  function nextLadybugLine(){
+    if(ladybugQueue.length === 0){
+      ladybugQueue = [...ladybugLines].sort(()=>Math.random()-0.5);
+    }
+    return ladybugQueue.pop();
+  }
+  let ladybugBubbleTimer = null;
+  let firstLadybugClick = true;
+  const ladybugHint = document.querySelector('.ladybug-hint');
+  document.querySelectorAll('.ladybug').forEach(l=>{
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble';
+    l.appendChild(bubble);
+    l.addEventListener('click', (ev)=>{
+      ev.stopPropagation();
+      document.querySelectorAll('.bubble.show').forEach(b=>{ if(b!==bubble) b.classList.remove('show'); });
+      bubble.textContent = nextLadybugLine();
+      bubble.classList.add('show');
+      clearTimeout(ladybugBubbleTimer);
+      ladybugBubbleTimer = setTimeout(()=>bubble.classList.remove('show'), 3200);
+      if(firstLadybugClick && ladybugHint){ ladybugHint.classList.add('hide'); firstLadybugClick = false; }
+    });
+  });
+
   // certificate lightbox (avoids browsers blocking data: URI navigation in a new tab)
   const certLightbox = document.getElementById('cert-lightbox');
   const certLightboxImg = document.getElementById('cert-lightbox-img');
@@ -868,6 +1017,111 @@
     card.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); openCertLightbox(img.src); } });
   });
   certLightboxClose.addEventListener('click', closeCertLightbox);
+
+  // scroll progress bar
+  const scrollProgress = document.getElementById('scroll-progress');
+  function updateScrollProgress(){
+    const h = document.documentElement;
+    const scrolled = h.scrollTop || document.body.scrollTop;
+    const max = h.scrollHeight - h.clientHeight;
+    scrollProgress.style.width = (max > 0 ? (scrolled / max) * 100 : 0) + '%';
+  }
+  window.addEventListener('scroll', updateScrollProgress, {passive:true});
+  updateScrollProgress();
+
+  // intro veil: a brief constellation-forming entrance on first load
+  (function(){
+    const veil = document.getElementById('intro-veil');
+    if(!veil || window.matchMedia('(prefers-reduced-motion: reduce)').matches){ if(veil) veil.remove(); return; }
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    if(isLight){
+      // sunbeams gathering into a glow, with a couple of clouds drifting past
+      const glow = document.createElement('div');
+      glow.className = 'iv-sunglow';
+      veil.appendChild(glow);
+      for(let i=0;i<8;i++){
+        const ray = document.createElement('div');
+        ray.className = 'iv-ray';
+        const angle = (i/8)*Math.PI*2;
+        const dist = 90 + Math.random()*70;
+        ray.style.setProperty('--rx', Math.cos(angle)*dist + 'px');
+        ray.style.setProperty('--ry', Math.sin(angle)*dist + 'px');
+        ray.style.transform = `rotate(${angle}rad)`;
+        ray.style.animationDelay = (Math.random()*0.2) + 's';
+        veil.appendChild(ray);
+      }
+      [-1, 1].forEach((dir, i)=>{
+        const cloud = document.createElement('div');
+        cloud.className = 'iv-cloud';
+        cloud.style.setProperty('--cx', (dir*220) + 'px');
+        cloud.style.left = (dir < 0 ? '20%' : '60%');
+        cloud.style.top = (30 + i*22) + '%';
+        cloud.style.animationDelay = (0.15 + i*0.15) + 's';
+        veil.appendChild(cloud);
+      });
+    } else {
+      const glyph = document.createElement('div');
+      glyph.className = 'iv-spark';
+      glyph.textContent = '✦';
+      veil.appendChild(glyph);
+      for(let i=0;i<14;i++){
+        const dot = document.createElement('div');
+        dot.className = 'iv-dot';
+        const angle = Math.random()*Math.PI*2;
+        const dist = 120 + Math.random()*160;
+        dot.style.setProperty('--ix', Math.cos(angle)*dist + 'px');
+        dot.style.setProperty('--iy', Math.sin(angle)*dist + 'px');
+        dot.style.animationDelay = (Math.random()*0.25) + 's';
+        veil.appendChild(dot);
+      }
+    }
+    setTimeout(()=>{ veil.classList.add('hide'); setTimeout(()=>veil.remove(), 750); }, 1150);
+  })();
+
+  // project filter tags
+  const projFilters = document.getElementById('proj-filters');
+  if(projFilters){
+    const projItems = document.querySelectorAll('.proj[data-tags]');
+    projFilters.querySelectorAll('button').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        projFilters.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        const f = btn.dataset.filter;
+        projItems.forEach(p=>{
+          const tags = p.dataset.tags.split(' ');
+          p.classList.toggle('filtered-out', f !== 'all' && !tags.includes(f));
+        });
+      });
+    });
+  }
+
+  // logo easter egg: click the initials a few times to summon a stray Poké Ball
+  (function(){
+    const logo = document.getElementById('brand-logo');
+    const ball = document.getElementById('egg-ball');
+    const toast = document.getElementById('egg-toast');
+    if(!logo) return;
+    let clicks = 0, clickTimer = null;
+    const lines = [
+      "A wild fairy tossed that.",
+      "Someone's been playing too much Battle Arena.",
+      "Gotta code 'em all.",
+      "That Poké Ball missed her portfolio too."
+    ];
+    logo.addEventListener('click', (e)=>{
+      clicks++;
+      clearTimeout(clickTimer);
+      clickTimer = setTimeout(()=>{ clicks = 0; }, 1200);
+      if(clicks >= 5){
+        clicks = 0;
+        e.preventDefault();
+        ball.classList.remove('go'); void ball.offsetWidth; ball.classList.add('go');
+        toast.textContent = lines[Math.floor(Math.random()*lines.length)];
+        toast.classList.add('show');
+        setTimeout(()=>toast.classList.remove('show'), 2600);
+      }
+    });
+  })();
   certLightbox.addEventListener('click', (e)=>{ if(e.target===certLightbox) closeCertLightbox(); });
   window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeCertLightbox(); });
 </script>
