@@ -100,15 +100,17 @@
   #navbar .nav-links a:hover{color:var(--star);}
   #navbar .nav-links a.active{color:var(--gold);}
   #navbar .nav-links a.active::after{width:100%;}
-  #navbar .nav-toggle{display:none; align-items:center; justify-content:center; width:36px; height:36px; border:1px solid var(--line); background:var(--panel); border-radius:2px; cursor:pointer; position:relative;}
+  #navbar .nav-toggle{display:none; align-items:center; justify-content:center; width:42px; height:42px; border:1px solid var(--line); background:var(--panel); border-radius:50%; cursor:pointer; position:relative; box-shadow:0 6px 18px -9px rgba(0,0,0,.4); transition:transform .3s ease, border-color .3s ease, box-shadow .3s ease;}
+  #navbar .nav-toggle:hover{transform:scale(1.08); border-color:var(--gold); box-shadow:0 8px 20px -8px rgba(232,207,138,.4);}
   #navbar .nav-toggle span, #navbar .nav-toggle span::before, #navbar .nav-toggle span::after{
-    content:""; position:absolute; width:16px; height:1.5px; background:var(--star); border-radius:1px; transition:transform .25s ease, opacity .25s ease;}
-  #navbar .nav-toggle span{top:50%; left:50%; transform:translate(-50%,-50%);}
-  #navbar .nav-toggle span::before{top:-5px; left:0;}
-  #navbar .nav-toggle span::after{top:5px; left:0;}
+    content:""; position:absolute; height:1.5px; background:var(--gold); border-radius:2px; transition:transform .35s cubic-bezier(.2,.9,.3,1), opacity .25s ease, width .25s ease, background .25s ease;}
+  #navbar .nav-toggle span{width:15px; top:50%; left:50%; transform:translate(-50%,-50%);}
+  #navbar .nav-toggle span::before{width:11px; top:-6px; left:2px;}
+  #navbar .nav-toggle span::after{width:15px; top:6px; left:0;}
+  #navbar .nav-toggle[aria-expanded="true"]{border-color:var(--gold);}
   #navbar .nav-toggle[aria-expanded="true"] span{background:transparent;}
-  #navbar .nav-toggle[aria-expanded="true"] span::before{top:0; transform:rotate(45deg);}
-  #navbar .nav-toggle[aria-expanded="true"] span::after{top:0; transform:rotate(-45deg);}
+  #navbar .nav-toggle[aria-expanded="true"] span::before{width:15px; top:0; left:0; transform:rotate(45deg); background:var(--gold);}
+  #navbar .nav-toggle[aria-expanded="true"] span::after{width:15px; top:0; left:0; transform:rotate(-45deg); background:var(--gold);}
   #nav-scrim{display:none;}
   .star{position:absolute; background:var(--star); border-radius:50%; animation:twinkle var(--d) ease-in-out infinite; opacity:.2;}
   @keyframes twinkle{0%,100%{opacity:.15; transform:scale(1);} 50%{opacity:1; transform:scale(1.4);}}
